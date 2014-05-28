@@ -1,0 +1,35 @@
+
+1 ------------------------------------------------------------------------------
+wget the files for the PSB and the PSB-PS Transfer Line
+   * wget -r --no-parent -e robots=off http://project-ps-optics.web.cern.ch/project-PS-optics/cps/Psb/2014/
+   * wget -r --no-parent -e robots=off http://project-ps-optics.web.cern.ch/project-PS-optics/cps/TransLines/PSB-PS/2014/
+
+These files are taken the 27th May 2014:
+   * The BT and BTP lines have been blessed by Olav after matching based on GEODE and the drawings
+   * The PSB files are far from being blessed and actually we will change the inputs heavily based on the inputs from Tobias Dobers provided in April/May 2014
+
+
+2 ------------------------------------------------------------------------------
+  cp -r project-ps-optics.web.cern.ch/project-PS-optics/cps/* .
+  rm -rf project-ps-optics.web.cern.ch/
+  rm */*/index*
+  rm */*/*/index*
+  rm */*/*/*/index*
+  rm */*/*/*/index*
+  rm */*/*/*/*/index*
+  rm */*/*/*/*/index*
+
+3 ------------------------------------------------------------------------------
+
+  cd TransLines/PSB-PS/2014/madx/
+  mkdir logs
+  rm ../out/*
+  madx32 < PSB_BT3_BTP.madx                                    >& logs/PSB_BT3_BTP
+  madx32 < PSB_BT3_BTP_updatedatMay2014.madx                   >& logs/PSB_BT3_BTP_updatedatMay2014 
+  madx32 < PSB_BT3_BTP_updatedatMay2014_bsw14l4.madx           >& logs/PSB_BT3_BTP_updatedatMay2014_bsw14l4.madx          
+  madx32 < PSB_BT3_BTP_updatedatMay2014_bsw15l1.madx           >& logs/PSB_BT3_BTP_updatedatMay2014_bsw15l1.madx        
+  madx32 < PSB_BT3_BTP_updatedatMay2014_bsw14l4_bsw15l1.madx   >& logs/PSB_BT3_BTP_updatedatMay2014_bsw14l4_bsw15l1.madx 
+
+4 ------------------------------------------------------------------------------
+ 
+  python compareTwiss.py
